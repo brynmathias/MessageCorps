@@ -2,18 +2,24 @@
 this could be done in a nicer way involving auto grabbing the names of the protobufs,
 but for the moment this makes using the code in prodcution easier if you're small"""
 
-from datetime import datetime
 import logging
-import pytz
-import uuid
-
-from tracing import trace_id 
 import os
+import uuid
+from datetime import datetime
+
+import pytz
+
+import protobuf.common.messageData_pb2 as messageData
+from tracing import trace_id
 
 # Import the protobuf objects
 
 
 LOGGER = logging.getLogger("messaging.protobuff_loader")
+
+SENDING_SERVICE = os.getenv('LOG_TAG_SERVICE', "NOTSET")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "DEVELOPMENT")
+
 
 def utcnow():
     return pytz.utc.localize(datetime.utcnow())
@@ -76,7 +82,7 @@ class MessageHandler():
         self.md.sending_service = SENDING_SERVICE
         self.md.uuid = str(uuid.uuid1())
         if not self.md.trace_id:
-            self.md.trace_id = Tracing.trace_id()
+            self.md.trace_id = trace_id()
 
     def string_repr(self):
         return self.pb.SerializeToString()

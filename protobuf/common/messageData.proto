@@ -1,0 +1,23 @@
+syntax = 'proto3';
+
+package protobuf.common;
+
+
+
+enum Environment {
+    UNKNOWN_ENVIRONMENT = 0 ; /* need a zero, but doesn't work with protobuf_to_dict */
+    PRODUCTION = 1;
+    DEVELOPMENT = 2;
+    STAGING = 3;
+}
+
+message messageData {
+    double timestamp = 1;
+    Environment environment = 2;
+    string sending_service = 3;
+    string uuid = 4;
+    string iso_date = 5;
+    int64 offset = 6;
+    int64 partition = 7;
+    string trace_id = 8;
+}
