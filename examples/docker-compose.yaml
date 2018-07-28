@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+
+    zookeeper:
+        image: wurstmeister/zookeeper
+        ports:
+           - 2181:2181
+        networks:
+            kafka:
+                aliases:
+                   - zookeeper
+                   - zk
+
+    kafka:
+        image: wurstmeister/kafka:0.10.0.1
+        hostname: kafka
+        environment:
+            KAFKA_ADVERTISED_HOST_NAME: localhost 
+            KAFKA_ADVERTISED_PORT: 9092 
+            KAFKA_HEAP_OPTS: "-Xms256M"
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        ports:
+            - '9092:9092'
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            kafka:
+                aliases:
+                    - kafka
+
+    manager:
+        ports:
+            - "9000:9000"
+        environment:
+            ZK_HOSTS: "zk:2181"
+        image: sheepkiller/kafka-manager
+        networks:
+            kafka:
+                aliases:
+                    - manager
+
+networks:
+    kafka:
