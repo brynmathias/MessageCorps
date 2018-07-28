@@ -9,7 +9,7 @@ A very short send and recieve example is in the examples folder, you'll require 
 
 
 
-Adding new protobufs
+# Adding new protobufs
 
 You can add new folders or sub folders depending on the hierachy you require.
 
