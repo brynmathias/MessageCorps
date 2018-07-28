@@ -10,7 +10,7 @@ from time import sleep, time
 from kafka import KafkaConsumer, KafkaProducer, TopicPartition
 from tenacity import retry, stop_after_attempt, wait_exponential
 
-from pb_handler import MessageHandler, MessageLoader
+from .pb_handler import MessageHandler, MessageLoader
 
 LOGGER = logging.getLogger(__name__)
 
@@ -43,6 +43,7 @@ class kafka_producer(object):
         try:
             self.producer = KafkaProducer(
                 bootstrap_servers=self.bootstrap_servers)
+            LOGGER.debug(f"Setting producer topic to {self.topic}")
         except Exception as e:
             LOGGER.fatal("Could not create kafka producer",
                          exc_info=True)
@@ -51,19 +52,18 @@ class kafka_producer(object):
     def send(self, pb, topic=None, callback=None):
         """docstring for send"""
         this_topic = None
-        if self.topic and not topic:
+        message = None
+        LOGGER.debug(f"called to send {pb}, self.topic {self.topic}, topic {topic}")
+        if self.topic:
             this_topic = self.topic
             message = MessageHandler(pb)
-        if self.topic and topic:
-            raise MessagingExceptionCritical(
-                "Called send on topic for a producer that has a single assigned topic, Exiting now")
         elif topic:
             this_topic = topic
             message = MessageHandler(pb)
         else:
-            raise MessagingException("Called send without a topic and producer "
-                                     "instantiated with topic = None")
-        self.producer.send(this_topic, message.to_dict())
+            raise MessagingException("Called send without a topic and producer " +
+                                     f"instantiated with topic = None {self.topic}")
+        self.producer.send(this_topic, message.compress())
         if callable(callback):
             callback()
 
@@ -144,6 +144,7 @@ class kafka_consumer(object):
             try:
                 for message in self.consumer:
                     try:
+                        LOGGER.debug(f"We have recieved {message}")
                         ml = MessageLoader(self.topic)
                         ml.load_kafka_message(message)
                         ret_val = ml.return_message()
@@ -168,7 +169,7 @@ class kafka_consumer(object):
                             "Couldn't close/commit consumer in exception due to {} trying to re-create".format(e))
                     self.create_kafka_consumer()
                     LOGGER.critical(
-                        "consuming message failed with: {0}".format(e), exc_info=True)
+                        "consuming message failed with: ", exc_info=True)
                 else:
                     raise MessagingExceptionCritical(
                         "Kafka has gone away, exiting running code, tried creating new consumer and failed")

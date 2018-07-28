@@ -1,0 +1,10 @@
+syntax = 'proto3';
+
+package protobuf.predictions;
+import "protobuf/common/messageData.proto";
+
+message Prediction {
+    repeated string object = 1;
+    int64 frame = 2;
+    protobuf.common.messageData _message_data = 3;
+}

@@ -8,9 +8,12 @@ import uuid
 from datetime import datetime
 
 import pytz
+import zlib
 
 import protobuf.common.messageData_pb2 as messageData
-from tracing import trace_id
+from protobuf.data.ImageData_pb2 import Image
+from protobuf.predictions.PredictedObject_pb2 import Prediction 
+from .tracing import trace_id
 
 # Import the protobuf objects
 
@@ -33,6 +36,8 @@ def topic_to_object(topic):
     """You pass us a topic name we return you a class"""
     try:
         return {
+            "VideoStream": Image,
+            "Predictions": Prediction,
         }[topic]
     except Exception as e:
         LOGGER.critical("could not convert topic string to protobuff message type with {0}".format(e), exc_info=e)
@@ -87,6 +92,9 @@ class MessageHandler():
     def string_repr(self):
         return self.pb.SerializeToString()
 
+    def compress(self):
+        return zlib.compress(self.string_repr(), -1)
+
     def to_dict(self):
         """docstring for to_json"""
         return {"protobuf": bytes_to_hex_str(self.string_repr())}
@@ -114,7 +122,8 @@ class MessageLoader():
         self.pb.ParseFromString(message)
 
     def load_kafka_message(self, message):
-        self.load_message(message.value)
+        decomp = zlib.decompress(message.value)
+        self.load_message(decomp)
         self.pb._message_data.offset = message.offset
         self.pb._message_data.partition = message.partition
 
