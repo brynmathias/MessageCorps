@@ -78,21 +78,20 @@ class kafka_consumer(object):
         self.topic = topic
         self.bootstrap_servers = bootstrap_servers
         self.consumer = None
-        self.group = None
+        self._get_group()
         self.enable_auto_commit = enable_auto_commit
         self.start_point = start_point
         self.kwargs = kwargs
         self.initial_setup()
         self._commit_lock = threading.Lock()
 
-    def get_group(self):
+    def _get_group(self):
         try:
-            self.group = os.getenv('LOG_TAG_GROUP')
-            self.service = os.getenv('LOG_TAG_SERVICE')
+            self.group = os.getenv('LOG_TAG_GROUP', "NOTSET")
+            self.service = os.getenv('LOG_TAG_SERVICE', "NOTSET")
         except Exception:
-            LOGGER.warning("Could not set group and service tags", exc_info=True)
-
-        pass
+            LOGGER.warning("Could not set group and service tags",
+                           exc_info=True)
 
     def initial_setup(self):
         """set up consumer"""
@@ -120,7 +119,7 @@ class kafka_consumer(object):
                 self.consumer = KafkaConsumer(
                     self.topic,
                     group_id=self.group,
-                    bootstrap_servers=self.bootstrap_servers, 
+                    bootstrap_servers=self.bootstrap_servers,
                     enable_auto_commit=self.enable_auto_commit,
                     auto_offset_reset=self.start_point)
         except Exception as e:
