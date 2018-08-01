@@ -26,7 +26,7 @@ def __path(filename):
 
 
 version = "0.0.1"
-print(version, branch)
+print(version)
 
 try:
     version = read("./VERSION").strip()
