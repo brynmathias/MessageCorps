@@ -147,15 +147,16 @@ class kafka_consumer(object):
                         ml = MessageLoader(self.topic)
                         ml.load_kafka_message(message)
                         ret_val = ml.return_message()
-                        LOGGER.info("Channel: {4}, Received: {0} at {1} offset {2}, partition {3}".format(ret_val._message_data.uuid,
-                                                                                                          ret_val._message_data.timestamp,
-                                                                                                          ret_val._message_data.offset,
-                                                                                                          ret_val._message_data.partition,
-                                                                                                          self.topic))
+                        LOGGER.info(f"Channel: {self.topic}, "
+                                    f"Received: {ret_val.message_data.uuid} "
+                                    f"at {ret_val._message_data.timestamp} "
+                                    f"offset {ret_val._message_data.offset}, "
+                                    f"partition {ret_val._message_data.partition}"
+                                    )
                         yield ret_val
                     except Exception as e:
-                        LOGGER.critical("%s failed to consume message %s on channel %s failed with: %s",
-                                        self, message, message.topic, e, exc_info=True)
+                        LOGGER.critical(f"{self} failed to consume message {message} on channel {message.topic} failed with: {e}",
+                                    exc_info=True)
                         raise e
 
             except Exception as e:
