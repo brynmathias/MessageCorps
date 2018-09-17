@@ -8,7 +8,6 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
-from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -20,9 +19,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='protobuf/common/messageData.proto',
   package='protobuf.common',
   syntax='proto3',
+  serialized_options=None,
   serialized_pb=_b('\n!protobuf/common/messageData.proto\x12\x0fprotobuf.common\"\xc1\x01\n\x0bmessageData\x12\x11\n\ttimestamp\x18\x01 \x01(\x01\x12\x31\n\x0b\x65nvironment\x18\x02 \x01(\x0e\x32\x1c.protobuf.common.Environment\x12\x17\n\x0fsending_service\x18\x03 \x01(\t\x12\x0c\n\x04uuid\x18\x04 \x01(\t\x12\x10\n\x08iso_date\x18\x05 \x01(\t\x12\x0e\n\x06offset\x18\x06 \x01(\x03\x12\x11\n\tpartition\x18\x07 \x01(\x03\x12\x10\n\x08trace_id\x18\x08 \x01(\t*T\n\x0b\x45nvironment\x12\x17\n\x13UNKNOWN_ENVIRONMENT\x10\x00\x12\x0e\n\nPRODUCTION\x10\x01\x12\x0f\n\x0b\x44\x45VELOPMENT\x10\x02\x12\x0b\n\x07STAGING\x10\x03\x62\x06proto3')
 )
-_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 _ENVIRONMENT = _descriptor.EnumDescriptor(
   name='Environment',
@@ -32,23 +31,23 @@ _ENVIRONMENT = _descriptor.EnumDescriptor(
   values=[
     _descriptor.EnumValueDescriptor(
       name='UNKNOWN_ENVIRONMENT', index=0, number=0,
-      options=None,
+      serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='PRODUCTION', index=1, number=1,
-      options=None,
+      serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='DEVELOPMENT', index=2, number=2,
-      options=None,
+      serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='STAGING', index=3, number=3,
-      options=None,
+      serialized_options=None,
       type=None),
   ],
   containing_type=None,
-  options=None,
+  serialized_options=None,
   serialized_start=250,
   serialized_end=334,
 )
@@ -75,63 +74,63 @@ _MESSAGEDATA = _descriptor.Descriptor(
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='environment', full_name='protobuf.common.messageData.environment', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='sending_service', full_name='protobuf.common.messageData.sending_service', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='uuid', full_name='protobuf.common.messageData.uuid', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='iso_date', full_name='protobuf.common.messageData.iso_date', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='offset', full_name='protobuf.common.messageData.offset', index=5,
       number=6, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='partition', full_name='protobuf.common.messageData.partition', index=6,
       number=7, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='trace_id', full_name='protobuf.common.messageData.trace_id', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      options=None),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  options=None,
+  serialized_options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -144,6 +143,7 @@ _MESSAGEDATA = _descriptor.Descriptor(
 _MESSAGEDATA.fields_by_name['environment'].enum_type = _ENVIRONMENT
 DESCRIPTOR.message_types_by_name['messageData'] = _MESSAGEDATA
 DESCRIPTOR.enum_types_by_name['Environment'] = _ENVIRONMENT
+_sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 messageData = _reflection.GeneratedProtocolMessageType('messageData', (_message.Message,), dict(
   DESCRIPTOR = _MESSAGEDATA,
