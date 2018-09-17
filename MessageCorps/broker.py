@@ -148,7 +148,7 @@ class kafka_consumer(object):
                         ml.load_kafka_message(message)
                         ret_val = ml.return_message()
                         LOGGER.info(f"Channel: {self.topic}, "
-                                    f"Received: {ret_val.message_data.uuid} "
+                                    f"Received: {ret_val._message_data.uuid} "
                                     f"at {ret_val._message_data.timestamp} "
                                     f"offset {ret_val._message_data.offset}, "
                                     f"partition {ret_val._message_data.partition}"
