@@ -72,13 +72,16 @@ class kafka_consumer(object):
 
     def __init__(self, topic,
                  bootstrap_servers=None, enable_auto_commit=True,
-                 start_point='latest', **kwargs):
+                 start_point='latest', group=None,  **kwargs):
 
         super(kafka_consumer, self).__init__()
         self.topic = topic
         self.bootstrap_servers = bootstrap_servers
         self.consumer = None
-        self._get_group()
+        if group:
+            self.group = group
+        else:
+            self._get_group()
         self.enable_auto_commit = enable_auto_commit
         self.start_point = start_point
         self.kwargs = kwargs
